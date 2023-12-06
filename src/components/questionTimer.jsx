@@ -4,13 +4,20 @@ function QuestionTimer({ timeout, onTimeout }) {
     const [remainingTime, setRemainingTime] = useState(timeout)
     
     useEffect(() => {
-        setTimeout(onTimeout, timeout)
+        const timer = setTimeout(onTimeout, timeout)
+        return () => {
+            clearTimeout(timer)
+        }
     }, [timeout, onTimeout])
     
     useEffect(() => {
-        setInterval(() => {
-            setRemainingTime(prevRemainingTime => prevRemainingTime - 10)
+        const interval = setInterval(() => {
+            setRemainingTime(prevRemainingTime => prevRemainingTime - 16)
         }, 10)
+
+        return () => {
+            clearInterval(interval)
+        }
     }, [])
     
     return(
